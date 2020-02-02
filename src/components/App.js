@@ -1,8 +1,15 @@
 import React from 'react';
-import CompetencyContainer from './CompetencyContainer';
+import CompetencyContainer from './CompetencyView/CompetencyContainer';
+import Header from './Header';
+
 
 export default function App() {
   return (
-    <CompetencyContainer />
+    <>
+      <Header/>
+      <main>
+        <CompetencyContainer />
+      </main>
+    </>
   );
 }
