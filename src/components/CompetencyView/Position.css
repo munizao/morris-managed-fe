@@ -1,0 +1,28 @@
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  lost-column: 1/2 auto 0px;
+  width: 10vw;
+  height: 10vw;
+  list-style-type: none;
+
+  div {
+    height: 90%;
+    width: 90%;
+    border-radius: 5vw;
+    
+  }
+}
+
+.level0 {
+  background-color: #ca4635;
+}
+
+.level1 {
+  background-color: #c7ca35;
+}
+
+.level2 {
+  background-color: #35ca4e;
+}
