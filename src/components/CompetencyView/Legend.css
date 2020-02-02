@@ -1,0 +1,12 @@
+.Legend {
+  text-align: center;
+  color: white;
+  span {
+    position: relative;
+    top: .2em;
+    display: inline-block;
+    border-radius: 1em;
+    width: 1em;
+    height: 1em;
+  }
+}

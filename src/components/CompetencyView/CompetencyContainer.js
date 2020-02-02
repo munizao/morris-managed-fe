@@ -2,6 +2,7 @@ import React from 'react';
 import DanceView from './DanceView';
 import DanceSelector from './DanceSelector';
 import { allDances } from '../../services/mm';
+import Legend from './Legend';
 
 export default class CompetencyContainer extends React.Component {
   state = {
@@ -45,6 +46,7 @@ export default class CompetencyContainer extends React.Component {
       <>
         <DanceSelector dances={this.state.dances} onDanceChange={this.handleDanceChange}/>
         <DanceView positions={this.state.levels} onPositionClick={this.handlePositionClick} />
+        <Legend />
       </>
     );
   }
