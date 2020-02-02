@@ -2,15 +2,15 @@ header {
   background-color: #ced898;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 4rem;
+  padding: 0px 1rem;
   h1 {
-    align-self: center;
     font-size: 2rem;
     display: inline;
     margin: 0px;
   }
   form {
-    align-self: center;
     input {
       margin-right: 2rem;
     }
