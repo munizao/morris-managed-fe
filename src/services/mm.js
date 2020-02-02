@@ -16,6 +16,11 @@ export const signedIn = () => {
     .then(res => res.json());
 };
 
+export const logout = () => {
+  return fetch(`${API_URL}/auth/logout`, { method: 'GET', credentials: 'include' })
+    .then(res => res.json());
+};
+
 export const allDances = () => {
   return fetch(`${API_URL}/dances`)
     .then((res) => res.json());
