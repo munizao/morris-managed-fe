@@ -47,6 +47,7 @@ module.exports = {
             options: {
               sourceMap: true,
               plugins: [
+                require('lost'),
                 require('postcss-import')(),
                 require('autoprefixer')(),
                 require('postcss-nested')(),
