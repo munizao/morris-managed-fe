@@ -1,12 +1,13 @@
 import React from 'react';
 import CompetencyContainer from './CompetencyView/CompetencyContainer';
 import Header from './Header';
-import { login, signedIn } from '../services/mm';
+import { login, signedIn, logout } from '../services/mm';
 import './App.css';
 
 
 export default class App extends React.Component {
   state = {
+    isSignedIn: false,
     dancerId: '',
     name: '',
     email: '',
@@ -18,9 +19,11 @@ export default class App extends React.Component {
       .then((res) => {
         console.log(res);
         if(res.status) {
-          return;
+          this.setState({ isSignedIn: false });
         }
-        this.setState({ dancerId: res.dancer._id, name: res.dancer.name });
+        else {
+          this.setState({ isSignedIn: true, dancerId: res.dancer._id, name: res.dancer.name });
+        }
       });
   }
 
@@ -32,7 +35,7 @@ export default class App extends React.Component {
           console.log(res); //TODO: handle case of invalid login
         }
         else {
-          this.setState({ name: res.dancer.name, dancerId: res.dancer._id });
+          this.setState({ isSignedIn: true, name: res.dancer.name, dancerId: res.dancer._id });
         }
       });
   }
@@ -41,10 +44,21 @@ export default class App extends React.Component {
     this.setState({ [target.name]: target.value });
   }
 
+  handleLogoutClick = () => {
+    logout()
+      .then(() => {
+        this.setState({isSignedIn: false})
+      });
+  }
+
   render() {
     return (
       <>
-        <Header authSubmit={this.handleAuthSubmit} inputChange={this.handleInputChange}  />
+        <Header isSignedIn={this.state.isSignedIn} 
+          dancerName={this.state.name} 
+          authSubmit={this.handleAuthSubmit} 
+          inputChange={this.handleInputChange} 
+          logoutClick={this.handleLogoutClick} />
         <main>
           <CompetencyContainer />
         </main>
