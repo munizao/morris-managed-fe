@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Position.css';
+import './Position.css';
+import styles from '../common.css';
 
 const Position = ({ i, level, onClick }) => {
   return (
