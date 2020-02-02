@@ -1,53 +1,38 @@
 import React from 'react';
 import DanceView from './DanceView';
 import DanceSelector from './DanceSelector';
-
-const dances = [
-  {
-    name: 'Oak and Ash and Thorn',
-    tradition: 'Moulton',
-    dancerQuantity: 6,
-    _id: 1,
-    levels: [0, 0,
-      1, 1,
-      0, 0
-    ]
-  },
-  {
-    name: 'South Australia',
-    tradition: 'Adderbury',
-    dancerQuantity: 8,
-    _id: 2,
-    levels: [0, 0,
-      1, 1,
-      0, 0,
-      2, 2
-    ]
-  },
-  {
-    name: 'Simon\'s Fancy',
-    tradition: 'Bampton',
-    dancerQuantity: 4,
-    _id: 3,
-    levels: [0, 0,
-      2, 2
-    ]
-  }
-];
-
+import { allDances } from '../../services/mm';
 
 export default class CompetencyContainer extends React.Component {
   state = {
-    levels: dances[0].levels,
-    selectedDance: 0, // levels should be field of dance
+    dances: [],
+    levels: [],
+    selectedDance: 0,
+  }
+
+  componentDidMount() {
+    this.fetchDances();
+  }
+
+  fetchDances() {
+    return allDances()
+      .then((dances) => {
+        this.setState({ dances: dances });
+        this.setDance(0);
+      });
+  }
+
+  setDance(n) {
+    //TODO: get levels from competency endpoint instead of all 0
+    this.setState({ selectedDance: n, levels: Array(this.state.dances[n].dancerQuantity).fill(0) });
   }
 
   handleDanceChange = ({ target }) => {
-    this.setState({ selectedDance: target.value, levels:dances[target.value].levels });
+    this.setDance(target.value);
+    //this.setState({ selectedDance: target.value, levels: this.state.dances[target.value].levels });
   };
 
   handlePositionClick = (i) => {
-    console.log(i);
     this.setState((state) => {
       const levels = state.levels.slice();
       levels[i] = (levels[i] + 1) % 3;
@@ -58,7 +43,7 @@ export default class CompetencyContainer extends React.Component {
   render() {
     return (
       <>
-        <DanceSelector dances={dances} onDanceChange={this.handleDanceChange}/>
+        <DanceSelector dances={this.state.dances} onDanceChange={this.handleDanceChange}/>
         <DanceView positions={this.state.levels} onPositionClick={this.handlePositionClick} />
       </>
     );
