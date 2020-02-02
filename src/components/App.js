@@ -2,6 +2,7 @@ import React from 'react';
 import CompetencyContainer from './CompetencyView/CompetencyContainer';
 import Header from './Header';
 import { login, signedIn } from '../services/mm';
+import './App.css';
 
 
 export default class App extends React.Component {

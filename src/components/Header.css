@@ -1,0 +1,18 @@
+header {
+  background-color: #ced898;
+  display: flex;
+  justify-content: space-between;
+  height: 4rem;
+  h1 {
+    align-self: center;
+    font-size: 2rem;
+    display: inline;
+    margin: 0px;
+  }
+  form {
+    align-self: center;
+    input {
+      margin-right: 2rem;
+    }
+  }
+}
