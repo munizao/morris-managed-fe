@@ -7,7 +7,7 @@ import Legend from './Legend';
 export default class CompetencyContainer extends React.Component {
   state = {
     dances: [],
-    levels: [],
+    // levels: [],
     selectedDance: 0,
   }
 
@@ -25,7 +25,15 @@ export default class CompetencyContainer extends React.Component {
 
   setDance(n) {
     //TODO: get levels from competency endpoint instead of all 0
-    this.setState({ selectedDance: n, levels: Array(this.state.dances[n].dancerQuantity).fill(0) });
+    this.setState((state) => {
+      const dances = state.dances.slice();
+      let levels;
+      if (!this.state.dances[n].levels) {
+        dances[n].levels = Array(this.state.dances[n].dancerQuantity).fill(0);
+      }
+
+      return { ...state, selectedDance: n, dances};
+    });
   }
 
   handleDanceChange = ({ target }) => {
@@ -35,17 +43,23 @@ export default class CompetencyContainer extends React.Component {
 
   handlePositionClick = (i) => {
     this.setState((state) => {
-      const levels = state.levels.slice();
+      const dances = state.dances.slice();
+      const levels = dances[state.selectedDance].levels.slice();
       levels[i] = (levels[i] + 1) % 3;
-      return { ...state, levels };
+      dances[state.selectedDance].levels = levels;
+      return { ...state, dances };
     });
   };
 
   render() {
+    let positions = [];
+    if(this.state.dances.length > 0 && this.state.dances[this.state.selectedDance].levels) {
+      positions = this.state.dances[this.state.selectedDance].levels;
+    }
     return (
       <>
         <DanceSelector dances={this.state.dances} onDanceChange={this.handleDanceChange}/>
-        <DanceView positions={this.state.levels} onPositionClick={this.handlePositionClick} />
+        <DanceView positions={positions} onPositionClick={this.handlePositionClick} />
         <Legend />
       </>
     );
