@@ -47,7 +47,7 @@ export default class App extends React.Component {
   handleLogoutClick = () => {
     logout()
       .then(() => {
-        this.setState({isSignedIn: false})
+        this.setState({ isSignedIn: false });
       });
   }
 

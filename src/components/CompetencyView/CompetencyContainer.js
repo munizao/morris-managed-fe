@@ -27,12 +27,10 @@ export default class CompetencyContainer extends React.Component {
     //TODO: get levels from competency endpoint instead of all 0
     this.setState((state) => {
       const dances = state.dances.slice();
-      let levels;
-      if (!this.state.dances[n].levels) {
+      if(!this.state.dances[n].levels) {
         dances[n].levels = Array(this.state.dances[n].dancerQuantity).fill(0);
       }
-
-      return { ...state, selectedDance: n, dances};
+      return { ...state, selectedDance: n, dances };
     });
   }
 
