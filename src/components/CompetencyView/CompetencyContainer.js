@@ -36,7 +36,6 @@ export default class CompetencyContainer extends React.Component {
 
   handleDanceChange = ({ target }) => {
     this.setDance(target.value);
-    //this.setState({ selectedDance: target.value, levels: this.state.dances[target.value].levels });
   };
 
   handlePositionClick = (i) => {
