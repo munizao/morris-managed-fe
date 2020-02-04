@@ -21,7 +21,8 @@ export const logout = () => {
     .then(res => res.json());
 };
 
-export const allDances = () => {
+export const getAllDances = () => {
   return fetch(`${API_URL}/dances`)
     .then((res) => res.json());
 };
+

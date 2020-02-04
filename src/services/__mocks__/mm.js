@@ -7,7 +7,7 @@ export const signedIn = () => {
   };
 };
 
-export const allDances = () => {
+export const getAllDances = () => {
   return [
     {
       name: 'Oak and Ash and Thorn',
