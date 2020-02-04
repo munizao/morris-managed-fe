@@ -4,7 +4,7 @@ import App from './App';
 
 jest.mock('../services/mm.js', () => ({
   signedIn: jest.fn(() => Promise.resolve()),
-  allDances: jest.fn(() => Promise.resolve())
+  getAllDances: jest.fn(() => Promise.resolve())
 }));
 
 describe('App component', () => {
