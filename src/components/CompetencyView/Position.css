@@ -3,14 +3,16 @@ li {
   align-items: center;
   justify-content: center;
   lost-column: 1/2 auto 0px;
-  width: 10vw;
-  height: 10vw;
+  width: 4cm;
+  height: 4cm;
+  max-width: 40vw;
+  max-height: 40vw;
   list-style-type: none;
 
   div {
     height: 90%;
     width: 90%;
-    border-radius: 5vw;
+    border-radius: 4cm;
     
   }
 }
