@@ -1,68 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CompetencyContainer from './CompetencyView/CompetencyContainer';
 import Header from './Header';
 import { login, signedIn, logout } from '../services/mm';
 import './App.css';
 
 
-export default class App extends React.Component {
-  state = {
+export default () => {
+  const [user, setUser] = useState({
     isSignedIn: false,
     dancerId: '',
     name: '',
-    email: '',
-    password: ''
-  }
+  });
 
-  componentDidMount() {
+  const [authInputs, setAuthInputs] = useState({ email: '', password: '' });
+
+  useEffect(() => {
     signedIn()
       .then((res) => {
         console.log(res);
         if(res.status) {
-          this.setState({ isSignedIn: false });
+          setUser({ isSignedIn: false });
         }
         else {
-          this.setState({ isSignedIn: true, dancerId: res.dancer._id, name: res.dancer.name });
+          setUser({ isSignedIn: true, dancerId: res.dancer._id, name: res.dancer.name });
         }
       });
-  }
+  }, []);
 
-  handleAuthSubmit = (event) => {
+  const handleAuthSubmit = (event) => {
     event.preventDefault();
-    login(this.state.email, this.state.password)
+    login(authInputs.email, authInputs.password)
       .then((res) => {
         if(res.status) {
           console.log(res); //TODO: handle case of invalid login
         }
         else {
-          this.setState({ isSignedIn: true, name: res.dancer.name, dancerId: res.dancer._id });
+          setUser({ isSignedIn: true, name: res.dancer.name, dancerId: res.dancer._id });
         }
       });
-  }
+  };
 
-  handleInputChange = ({ target }) => {
-    this.setState({ [target.name]: target.value });
-  }
+  const handleInputChange = ({ target }) => {
+    setAuthInputs({ [target.name]: target.value });
+  };
 
-  handleLogoutClick = () => {
+  const handleLogoutClick = () => {
     logout()
       .then(() => {
-        this.setState({ isSignedIn: false });
+        setUser({ isSignedIn: false });
       });
-  }
+  };
 
-  render() {
-    return (
-      <>
-        <Header isSignedIn={this.state.isSignedIn} 
-          dancerName={this.state.name} 
-          authSubmit={this.handleAuthSubmit} 
-          inputChange={this.handleInputChange} 
-          logoutClick={this.handleLogoutClick} />
-        <main>
-          <CompetencyContainer />
-        </main>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Header isSignedIn={user.isSignedIn} 
+        dancerName={user.name} 
+        authSubmit={handleAuthSubmit} 
+        inputChange={handleInputChange} 
+        logoutClick={handleLogoutClick} />
+      <main>
+        <CompetencyContainer />
+      </main>
+    </>
+  );
+};
+
