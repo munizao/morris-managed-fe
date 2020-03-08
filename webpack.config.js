@@ -17,7 +17,7 @@ module.exports = {
   plugins: [
     new HtmlPlugin({ template: './src/index.html' }),
     new CleanWebpackPlugin(),
-    new webpack.EnvironmentPlugin({ API_URL: 'http://localhost:7892' }),
+    new webpack.EnvironmentPlugin({ API_URL: 'http://localhost:7892/api/v1' }),
     new Dotenv({
       systemvars: true
     }),
