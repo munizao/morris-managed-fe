@@ -1,6 +1,8 @@
-const API_URL = 'https://morris-managed.herokuapp.com/api/v1';
-// const API_URL = 'http://localhost:7890/api/v1';
+// deployed: const API_URL = 'https://morris-managed.herokuapp.com/api/v1';
+// dev: const API_URL = 'http://localhost:7892/api/v1';
 
+// eslint-disable-next-line
+const API_URL = process.env.API_URL;
 
 export const login = (email, password) => {
   const body = { email, password };
