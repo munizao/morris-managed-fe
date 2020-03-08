@@ -1,0 +1,18 @@
+.level0 {
+  background-color: #ca4635;
+}
+
+.level1 {
+  background-color: #c7ca35;
+  border-style: solid;
+  border-width: .15em;
+  border-color: white;
+}
+
+.level2 {
+  background-color: #35ca4e;
+  border-style: solid;
+
+  border-width: .3em;
+  border-color: white;
+}

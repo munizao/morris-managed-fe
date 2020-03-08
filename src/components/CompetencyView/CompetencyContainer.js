@@ -1,51 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DanceView from './DanceView';
 import DanceSelector from './DanceSelector';
-import { allDances } from '../../services/mm';
+import { getAllDances } from '../../services/mm';
+import Legend from './Legend';
 
-export default class CompetencyContainer extends React.Component {
-  state = {
-    dances: [],
-    levels: [],
-    selectedDance: 0,
-  }
+const CompetencyContainer = () => {
+  const [dances, setDances] = useState([]);
+  const [selectedDance, setSelectedDance] = useState(0);
 
-  componentDidMount() {
-    this.fetchDances();
-  }
-
-  fetchDances() {
-    return allDances()
-      .then((dances) => {
-        this.setState({ dances: dances });
-        this.setDance(0);
+  const fetchDances = () => {
+    getAllDances()
+      .then((fetchedDances) => {
+        setDances(fetchedDances);
+        setDance(selectedDance);
       });
-  }
+  };
 
-  setDance(n) {
+  useEffect(fetchDances, []);
+
+  const setDance = (n) => {
     //TODO: get levels from competency endpoint instead of all 0
-    this.setState({ selectedDance: n, levels: Array(this.state.dances[n].dancerQuantity).fill(0) });
-  }
-
-  handleDanceChange = ({ target }) => {
-    this.setDance(target.value);
-    //this.setState({ selectedDance: target.value, levels: this.state.dances[target.value].levels });
-  };
-
-  handlePositionClick = (i) => {
-    this.setState((state) => {
-      const levels = state.levels.slice();
-      levels[i] = (levels[i] + 1) % 3;
-      return { ...state, levels };
+    setDances(prevDances => {
+      const newDances = prevDances.slice();
+      if(!newDances[n].levels) {
+        newDances[n].levels = Array(newDances[n].dancerQuantity).fill(0);
+      }
+      return newDances;
     });
+    setSelectedDance(n);
   };
 
-  render() {
-    return (
-      <>
-        <DanceSelector dances={this.state.dances} onDanceChange={this.handleDanceChange}/>
-        <DanceView positions={this.state.levels} onPositionClick={this.handlePositionClick} />
-      </>
-    );
+  const handleDanceChange = ({ target }) => {
+    setDance(target.value);
+  };
+
+  const handlePositionClick = (i) => {
+    const newDances = dances.slice();
+    const levels = newDances[selectedDance].levels.slice();
+    levels[i] = (levels[i] + 1) % 3;
+    newDances[selectedDance].levels = levels;
+    setDances(newDances);
+  };
+
+  let positions = [];
+  if(dances.length > 0 && dances[selectedDance].levels) {
+    positions = dances[selectedDance].levels;
   }
-}
+  return (
+    <>
+      <DanceSelector dances={dances} onDanceChange={handleDanceChange}/>
+      <DanceView positions={positions} onPositionClick={handlePositionClick} />
+      <Legend />
+    </>
+  );
+};
+
+export default CompetencyContainer;

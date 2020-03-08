@@ -1,5 +1,7 @@
 const HtmlPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 // eslint-disable-next-line
 module.exports = {
@@ -14,7 +16,11 @@ module.exports = {
   },
   plugins: [
     new HtmlPlugin({ template: './src/index.html' }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.EnvironmentPlugin({ API_URL: 'http://localhost:7892/api/v1' }),
+    new Dotenv({
+      systemvars: true
+    }),
   ],
   module: {
     rules: [

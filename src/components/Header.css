@@ -1,0 +1,21 @@
+header {
+  background-color: #ced898;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  padding: .1rem 1rem .1rem;
+  div {
+    font-size: .8rem;
+  }
+  h1 {
+    font-size: 1.8rem;
+    display: inline;
+    margin: 0px;
+  }
+  form {
+    input {
+      margin-right: 2rem;
+    }
+  }
+}
