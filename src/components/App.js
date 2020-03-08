@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import CompetencyContainer from './CompetencyView/CompetencyContainer';
 import Header from './Header';
-import { login, signedIn, logout } from '../services/mm';
+import { signedIn } from '../services/mm';
+import UserContext from './UserContext';
 import './App.css';
 
 
@@ -12,12 +13,9 @@ export default () => {
     name: '',
   });
 
-  const [authInputs, setAuthInputs] = useState({ email: '', password: '' });
-
   useEffect(() => {
     signedIn()
       .then((res) => {
-        console.log(res);
         if(res.status) {
           setUser({ isSignedIn: false });
         }
@@ -27,41 +25,15 @@ export default () => {
       });
   }, []);
 
-  const handleAuthSubmit = (event) => {
-    event.preventDefault();
-    login(authInputs.email, authInputs.password)
-      .then((res) => {
-        if(res.status) {
-          console.log(res); //TODO: handle case of invalid login
-        }
-        else {
-          setUser({ isSignedIn: true, name: res.dancer.name, dancerId: res.dancer._id });
-        }
-      });
-  };
 
-  const handleInputChange = ({ target }) => {
-    setAuthInputs({ [target.name]: target.value });
-  };
-
-  const handleLogoutClick = () => {
-    logout()
-      .then(() => {
-        setUser({ isSignedIn: false });
-      });
-  };
 
   return (
-    <>
-      <Header isSignedIn={user.isSignedIn} 
-        dancerName={user.name} 
-        authSubmit={handleAuthSubmit} 
-        inputChange={handleInputChange} 
-        logoutClick={handleLogoutClick} />
+    <UserContext.Provider value={{ user, setUser }}>
+      <Header />
       <main>
         <CompetencyContainer />
       </main>
-    </>
+    </UserContext.Provider>
   );
 };
 
